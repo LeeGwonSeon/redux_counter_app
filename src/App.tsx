@@ -1,5 +1,6 @@
 import "./App.css";
 
+import { useState } from "react";
 type Props = {
   value: any;
   onIncrement: () => void;
@@ -7,11 +8,25 @@ type Props = {
 };
 
 function App({ value, onIncrement, onDexrement }: Props) {
+  const [todoValue, setTodoValue] = useState("");
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTodoValue(e.target.value);
+  };
+  const addTodo = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setTodoValue("");
+  };
+
   return (
     <div className="App">
       {/*Clicked: {value} times*/}
       <button onClick={onIncrement}>+</button>
       <button onClick={onDexrement}>-</button>
+
+      <form onSubmit={addTodo}>
+        <input type="text" value={todoValue} onChange={handleChange} />
+        <input type="submit" />
+      </form>
     </div>
   );
 }
